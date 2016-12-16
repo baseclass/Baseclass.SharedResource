@@ -1,4 +1,11 @@
-﻿language: csharp
+language: csharp
 solution: Baseclass.SharedResource.sln
+before_install:
+- openssl aes-256-cbc -K $encrypted_2a2e51e072f4_key -iv $encrypted_2a2e51e072f4_iv
+  -in Baseclass.SharedResource.snk.enc -out Baseclass.SharedResource.snk -d
+install:
+  - nuget restore Baseclass.SharedResource.sln
+script:
+  - xbuild /p:Configuration=Release Baseclass.SharedResource.sln /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=Baseclass.SharedResource.snk
 after_script:
-	nuget pack Baseclass.SharedResource/Baseclass.SharedResource.nuspec
+  - nuget pack Baseclass.SharedResource/Baseclass.SharedResource.nuspec
