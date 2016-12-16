@@ -1,0 +1,4 @@
+﻿language: csharp
+solution: Baseclass.SharedResource.sln
+after_script:
+	nuget pack Baseclass.SharedResource/Baseclass.SharedResource.nuspec
