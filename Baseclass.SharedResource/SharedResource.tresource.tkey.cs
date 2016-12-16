@@ -1,7 +1,8 @@
-﻿namespace Baseclass.SharedResource
+namespace Baseclass.SharedResource
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Threading;
     using System.Threading.Tasks;
     using Nito.AsyncEx;
@@ -20,8 +21,10 @@
     /// <typeparam name="TKey">
     ///     The type of the key.
     /// </typeparam>
-    public class SharedResource<TResource, TKey>
-        where TResource : class, IAsyncDisposable
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleType",
+         Justification = "Reviewed.")]
+    public class SharedResource<TResource, TKey> : ISharedResource<TResource, TKey>
+        where TResource : IAsyncDisposable
     {
         private readonly AsyncLock asyncLock = new AsyncLock();
         private readonly Func<TKey, CancellationToken, Task<TResource>> createAsync;
@@ -37,20 +40,6 @@
         public SharedResource(Func<TKey, CancellationToken, Task<TResource>> createAsync)
         {
             this.createAsync = createAsync;
-        }
-
-        /// <summary>
-        ///     Gets a token and the resource, the resource is created if there is not an existing one.
-        /// </summary>
-        /// <param name="cancellationToken">
-        ///     The token to be able to cancel to get the resource.
-        /// </param>
-        /// <returns>
-        ///     A token containing the resource which should be disposed if the resource is not needed anymore.
-        /// </returns>
-        public Task<IToken<TResource>> GetResourceAsync(CancellationToken cancellationToken)
-        {
-            return this.GetResourceAsync(default(TKey), cancellationToken);
         }
 
         /// <summary>
@@ -85,7 +74,7 @@
         {
             using (await this.asyncLock.LockAsync())
             {
-                ResourceCount resource = this.resources[key];
+                var resource = this.resources[key];
                 resource.UsageCount--;
                 if (resource.UsageCount == 0)
                 {
@@ -103,7 +92,7 @@
                 this.UsageCount = 0;
             }
 
-            public TResource Resource { get; private set; }
+            public TResource Resource { get; }
 
             public int UsageCount { get; set; }
         }
@@ -122,7 +111,7 @@
 
             #region IToken<TResource> Members
 
-            public TResource Resource { get; private set; }
+            public TResource Resource { get; }
 
             public Task DisposeAsync()
             {

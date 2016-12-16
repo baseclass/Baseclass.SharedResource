@@ -73,9 +73,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IResource.cs" />
+    <Compile Include="IResourceFactory.cs" />
+    <Compile Include="IResourceFactoryWithParam.cs" />
+    <Compile Include="ISharedResource.cs" />
+    <Compile Include="ISharedResourceFactory.cs" />
     <Compile Include="IToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SharedResource.cs" />
+    <Compile Include="SharedResource.tresource.tkey.cs" />
+    <Compile Include="SharedResource.tresource.cs" />
+    <Compile Include="SharedResourceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Baseclass.SharedResource.nuspec" />
