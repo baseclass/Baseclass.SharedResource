@@ -12,4 +12,4 @@ install:
 script:
   - xbuild /p:Configuration=Release Baseclass.SharedResource.sln /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=../Baseclass.SharedResource.snk
 after_script:
-  - nuget pack Baseclass.SharedResource/Baseclass.SharedResource.nuspec -properties version=$PACKAGE_VERSION
+  - nuget pack Baseclass.SharedResource/Baseclass.SharedResource.nuspec -basepath Baseclass.SharedResource -properties version=$PACKAGE_VERSION
