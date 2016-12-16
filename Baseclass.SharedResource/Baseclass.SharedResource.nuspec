@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Baseclass.SharedResource</id>
-    <version>0.2.0</version>
+    <version>$version</version>
     <title>Baseclass.SharedResource</title>
     <authors>baseclass</authors>
     <owners>baseclass</owners>
