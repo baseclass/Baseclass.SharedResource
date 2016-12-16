@@ -85,7 +85,6 @@
     <Compile Include="SharedResourceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".travis.yml" />
     <None Include="Baseclass.SharedResource.nuspec" />
     <None Include="Baseclass.SharedResource.snk" />
     <None Include="packages.config" />
