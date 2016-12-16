@@ -13,3 +13,4 @@ script:
   - xbuild /p:Configuration=Release Baseclass.SharedResource.sln /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=../Baseclass.SharedResource.snk
 after_script:
   - nuget pack Baseclass.SharedResource/Baseclass.SharedResource.nuspec -basepath Baseclass.SharedResource -properties version=$PACKAGE_VERSION
+  - if [ $TRAVIS_BRANCH = 'master' ]; then nuget push Baseclass.SharedResource.$PACKAGE_VERSION.nupkg $NUGET_API_KEY ; fi
