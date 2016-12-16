@@ -10,6 +10,6 @@ before_install:
 install:
   - nuget restore Baseclass.SharedResource.sln
 script:
-  - xbuild /p:Configuration=Release Baseclass.SharedResource.sln /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=Baseclass.SharedResource.snk
+  - xbuild /p:Configuration=Release Baseclass.SharedResource.sln /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=../Baseclass.SharedResource.snk
 after_script:
   - nuget pack Baseclass.SharedResource/Baseclass.SharedResource.nuspec -properties version="$PACKAGE_VERSION"
