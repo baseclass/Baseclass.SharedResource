@@ -1,7 +1,7 @@
 language: csharp
 solution: Baseclass.SharedResource.sln
 env:
-- PACKAGE_VERSION=0.2.$TRAVIS_JOB_ID
+- PACKAGE_VERSION=0.2.$TRAVIS_BUILD_NUMBER
 before_install:
 - openssl aes-256-cbc -K $encrypted_2a2e51e072f4_key -iv $encrypted_2a2e51e072f4_iv
   -in Baseclass.SharedResource.snk.enc -out Baseclass.SharedResource.snk -d
