@@ -2,15 +2,10 @@ language: csharp
 solution: Baseclass.SharedResource.sln
 env:
 - PACKAGE_VERSION=0.2.$TRAVIS_BUILD_NUMBER
-before_install:
-- openssl aes-256-cbc -K $encrypted_2a2e51e072f4_key -iv $encrypted_2a2e51e072f4_iv
-  -in Baseclass.SharedResource.snk.enc -out Baseclass.SharedResource.snk -d
-- pwd
-- ls -la
 install:
   - nuget restore Baseclass.SharedResource.sln
 script:
-  - xbuild /p:Configuration=Release Baseclass.SharedResource.sln /p:SignAssembly=true /p:AssemblyOriginatorKeyFile=../Baseclass.SharedResource.snk
+  - xbuild /p:Configuration=Release Baseclass.SharedResource.sln
 after_script:
   - nuget pack Baseclass.SharedResource/Baseclass.SharedResource.nuspec -basepath Baseclass.SharedResource -properties version=$PACKAGE_VERSION
   - if [ $TRAVIS_BRANCH = 'master' ]; then nuget push Baseclass.SharedResource.$PACKAGE_VERSION.nupkg $NUGET_API_KEY ; fi
