@@ -3,7 +3,7 @@ solution: Baseclass.SharedResource.sln
 env:
 - PACKAGE_VERSION=0.2.$TRAVIS_BUILD_NUMBER
 install:
-  - nuget restore Baseclass.SharedResource.sln
+  - mono .paket/paket.exe restore
 script:
   - xbuild /p:Configuration=Release Baseclass.SharedResource.sln
 after_script:
