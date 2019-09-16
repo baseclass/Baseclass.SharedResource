@@ -3,7 +3,7 @@ solution: Baseclass.SharedResource.sln
 env:
 - PACKAGE_VERSION=0.2.$TRAVIS_BUILD_NUMBER
 install:
-  - ./.paket/paket.exe restore
+  - mono .paket/paket.exe restore
 script:
   - xbuild /p:Configuration=Release Baseclass.SharedResource.sln
 after_script:
