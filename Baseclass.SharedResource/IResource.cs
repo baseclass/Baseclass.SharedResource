@@ -1,8 +1,8 @@
 ﻿namespace Baseclass.SharedResource
 {
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Rx.Contrib;
 
     /// <summary>
     ///     Contract for a resource which can be shared.

@@ -3,7 +3,6 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Rx.Contrib;
 
     /// <summary>
     ///     Helper class to share a resource which is <see cref="IAsyncDisposable" />.

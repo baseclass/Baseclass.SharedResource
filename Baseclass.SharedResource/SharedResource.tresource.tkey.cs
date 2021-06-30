@@ -6,7 +6,6 @@ namespace Baseclass.SharedResource
     using System.Threading;
     using System.Threading.Tasks;
     using Nito.AsyncEx;
-    using Rx.Contrib;
 
     /// <summary>
     ///     Helper class to share a resource which is <see cref="IAsyncDisposable" />.
@@ -70,7 +69,7 @@ namespace Baseclass.SharedResource
             }
         }
 
-        private async Task ReturnResource(TKey key)
+        private async ValueTask ReturnResource(TKey key)
         {
             using (await this.asyncLock.LockAsync())
             {
@@ -99,10 +98,10 @@ namespace Baseclass.SharedResource
 
         private class Token : IToken<TResource>
         {
-            private readonly Func<TKey, Task> disposeTask;
+            private readonly Func<TKey, ValueTask> disposeTask;
             private readonly TKey key;
 
-            public Token(TResource resource, TKey key, Func<TKey, Task> disposeTask)
+            public Token(TResource resource, TKey key, Func<TKey, ValueTask> disposeTask)
             {
                 this.Resource = resource;
                 this.disposeTask = disposeTask;
@@ -113,7 +112,7 @@ namespace Baseclass.SharedResource
 
             public TResource Resource { get; }
 
-            public Task DisposeAsync()
+            public ValueTask DisposeAsync()
             {
                 return this.disposeTask(this.key);
             }

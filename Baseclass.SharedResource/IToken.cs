@@ -1,6 +1,6 @@
 ﻿namespace Baseclass.SharedResource
 {
-    using Rx.Contrib;
+    using System;
 
     /// <summary>
     ///     A disposable token to a shared resource.

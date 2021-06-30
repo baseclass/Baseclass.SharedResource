@@ -4,4 +4,4 @@ redirects: on
 source https://api.nuget.org/v3/index.json
 
 nuget Nito.AsyncEx
-nuget Rx.Contrib
+nuget Microsoft.Bcl.AsyncInterfaces
