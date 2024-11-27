@@ -3,6 +3,7 @@ namespace Baseclass.SharedResource
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Nito.AsyncEx;
@@ -65,7 +66,25 @@ namespace Baseclass.SharedResource
 
                 this.resources[key].UsageCount++;
 
-                return new Token(this.resources[key].Resource, key, this.ReturnResource);
+                return new Token(this.resources[key], key, this.ReturnResource);
+            }
+        }
+
+        public async Task ResetAsync(bool disposeResource)
+        {
+            using (await this.asyncLock.LockAsync(CancellationToken.None))
+            {
+                foreach (var resourceCount in this.resources.Values.ToArray())
+                {
+                    if (disposeResource)
+                    {
+                        await resourceCount.Resource.DisposeAsync();
+                    }
+
+                    resourceCount.Invalidated = true;
+                }
+
+                this.resources.Clear();
             }
         }
 
@@ -85,36 +104,54 @@ namespace Baseclass.SharedResource
 
         private class ResourceCount
         {
+            private readonly TResource resource;
+
             public ResourceCount(TResource resource)
             {
-                this.Resource = resource;
+                this.resource = resource;
                 this.UsageCount = 0;
             }
 
-            public TResource Resource { get; }
+            public TResource Resource
+            {
+                get
+                {
+                    if (this.Invalidated)
+                        throw new InvalidOperationException("Resource is not valid anymore, get a new one");
+
+                    return this.resource;
+                }
+            }
 
             public int UsageCount { get; set; }
+
+            public bool Invalidated { get; set; }
         }
 
         private class Token : IToken<TResource>
         {
             private readonly Func<TKey, ValueTask> disposeTask;
             private readonly TKey key;
+            private readonly ResourceCount resourceCount;
 
-            public Token(TResource resource, TKey key, Func<TKey, ValueTask> disposeTask)
+            public Token(ResourceCount resourceCount, TKey key, Func<TKey, ValueTask> disposeTask)
             {
-                this.Resource = resource;
+                this.resourceCount = resourceCount;
                 this.disposeTask = disposeTask;
                 this.key = key;
             }
 
             #region IToken<TResource> Members
 
-            public TResource Resource { get; }
+            public TResource Resource => this.resourceCount.Resource;
+
+            public bool IsTokenValid => !this.resourceCount.Invalidated;
 
             public ValueTask DisposeAsync()
             {
-                return this.disposeTask(this.key);
+                return !this.resourceCount.Invalidated 
+                    ? this.disposeTask(this.key)
+                    : default;
             }
 
             #endregion

@@ -14,5 +14,11 @@
         ///     Gets the shared resource.
         /// </summary>
         TResource Resource { get; }
+
+        /// <summary>
+        ///     Gets a value if a token is valid.
+        ///     A token is not valid anymore if the resource was reset.
+        /// </summary>
+        bool IsTokenValid { get; }
     }
 }

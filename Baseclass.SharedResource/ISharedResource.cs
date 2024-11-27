@@ -34,6 +34,15 @@
         ///     A token containing the resource which should be disposed if the resource is not needed anymore.
         /// </returns>
         Task<IToken<TResource>> GetResourceAsync(TKey key, CancellationToken cancellationToken);
+
+        /// <summary>
+        ///     Resets this resource, next call to <see cref="GetResourceAsync"/> will create a new resource.
+        ///     Disposing previously returned tokens will have no effect.
+        /// </summary>
+        /// <param name="disposeResource">
+        ///     Should the resource be disposed?
+        /// </param>
+        Task ResetAsync(bool disposeResource);
     }
 
     /// <summary>
@@ -59,5 +68,14 @@
         ///     A token containing the resource which should be disposed if the resource is not needed anymore.
         /// </returns>
         Task<IToken<TResource>> GetResourceAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        ///     Resets this resource, next call to <see cref="GetResourceAsync"/> will create a new resource.
+        ///     Disposing previously returned tokens will have no effect.
+        /// </summary>
+        /// <param name="disposeResource">
+        ///     Should the resource be disposed?
+        /// </param>
+        Task ResetAsync(bool disposeResource);
     }
 }
