@@ -1,14 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{26A47951-78E0-4591-AA33-D24514D6AE88}"
-	ProjectSection(SolutionItems) = preProject
-		paket.dependencies = paket.dependencies
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Baseclass.SharedResource", "Baseclass.SharedResource\Baseclass.SharedResource.csproj", "{4240C839-D9A3-4637-B34C-C0CCA17681A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Baseclass.SharedResource", "Baseclass.SharedResource\Baseclass.SharedResource.csproj", "{4240C839-D9A3-4637-B34C-C0CCA17681A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
